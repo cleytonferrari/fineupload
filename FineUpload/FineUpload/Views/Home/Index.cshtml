@@ -4,46 +4,20 @@
 <link href="~/Content/FineUploader.css" rel="stylesheet" />
 <h2>Fine Upload</h2>
 <p><a href="http://fineuploader.com/">http://fineuploader.com/</a></p>
-
-@*<div id="fine-uploader"></div>
-
-<div id="restricted-fine-uploader"></div>
-<script>
-    function createUploader() {
-        var uploader = new qq.FineUploader({
-            element: document.getElementById('fine-uploader'),
-            request: {
-                endpoint: '/Home/UploadFile'
-            },
-            text: {
-                uploadButton: '<div><i class="icon-upload icon-white"></i> Selecionar arquivos</div>'
-            },
-            classes: {
-                success: 'alert alert-success',
-                fail: 'alert alert-error'
-            },
-            callbacks: {
-                onComplete: function (id, fileName, responseJSON) {
-                    console.log(responseJSON);
-                    if (responseJSON.success) {
-                        $('#fine-uploader').append('<img width="60" height="60" src="' + responseJSON.img + '" alt="' + fileName + '">');
-                    }
-                }
-            }
-        });
-    }
-
-    window.onload = createUploader;
-</script>*@
-
-
+<p><a href="http://imageresizing.net/docs/howto/generate-versions">http://imageresizing.net/docs/howto/generate-versions</a></p>
 
 <div id="manual-fine-uploader"></div>
 <div id="triggerUpload" class="btn" style="margin-top: 10px;">
-<i class="icon-upload icon-white"></i> Enviar Arquivos
+    <i class="icon-upload icon-white"></i>Enviar Arquivos
 </div>
 
-<div id="lista-arquivo"></div>
+<div  class="row-fluid" style="margin-top: 20px">
+    <div class="row-fluid">
+        <ul class="thumbnails" id="lista-arquivo">
+            
+        </ul>
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {
@@ -55,13 +29,17 @@
             text: {
                 uploadButton: '<div><i class="icon-upload icon-white"></i> Selecionar arquivos</div>'
             },
+            validation: {
+                allowedExtensions: ['jpeg', 'jpg', 'png'],
+                sizeLimit: 4194304 // 4Mb = (1024 * 1024 bytes) * 4
+            },
             classes: {
                 success: 'alert alert-success',
                 fail: 'alert alert-error'
             }
         }).on('complete', function (event, id, fileName, responseJSON) {
             if (responseJSON.success) {
-                $('#lista-arquivo').append('<img width="60" height="60" src="' + responseJSON.img + '" alt="' + fileName + '">');
+                $('#lista-arquivo').append('<li><img class="thumbnail" alt="' + fileName + '"  src="' + responseJSON.img + '"></li>');
             }
         });;
         $('#triggerUpload').click(function () {
