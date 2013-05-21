@@ -8,13 +8,13 @@
     width: 100%;
 }
 .qq-upload-button {
-    display: block;
+    /*display: block;
     width: 105px;
     padding: 7px 0;
     text-align: center;
     background: #880000;
     border-bottom: 1px solid #DDD;
-    color: #FFF;
+    color: #FFF;*/
 }
 .qq-upload-button-hover {
     background: #CC0000;
