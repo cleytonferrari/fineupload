@@ -12,7 +12,10 @@
         <div id="manual-fine-uploader"></div>
         <div class="span3">
             <div id="triggerUpload" class="btn" style="margin-top: 10px;">
-                <i class="icon-upload icon-white"></i>Enviar Arquivos
+                <i class="icon-upload"></i>Enviar Arquivos
+            </div>
+            <div id="limpar" class="btn" style="margin-top: 10px;">
+                <i class="icon-refresh"></i>Limpar
             </div>
         </div>
 
@@ -49,6 +52,11 @@
             request: {
                 endpoint: '/Home/UploadFile'
             },
+            deleteFile: {
+                enabled: true,
+                forceConfirm: true,
+                endpoint: 'server/file'
+            },
             autoUpload: false,
             text: {
                 uploadButton: '<div><i class="icon-upload icon-white"></i> Selecionar Arquivos</div>'
@@ -61,22 +69,41 @@
                 '<div class="qq-uploader span12">' +
                     '<pre class="qq-upload-drop-area span12"><span>{dragZoneText}</span></pre>' +
                     '<span class="qq-drop-processing"><span>{dropProcessingText}</span><span class="qq-drop-processing-spinner"></span></span>' +
-                    '<div style="overflow-x: hidden; overflow-y: scroll; height: 400px; width: 600px;">' +
-                    '<ul class="qq-upload-list span" style="margin-top: 10px; text-align: center;"></ul>' +
+                    '<div style="overflow-x: hidden; overflow-y: scroll; height: 200px; width: 600px;">' +
+                        '<ul class="qq-upload-list span" style="margin-top: 10px; text-align: center;"></ul>' +
                     '</div>' +
                     '<div class="qq-upload-button btn btn-success" style="width: 190px">{uploadButtonText}</div>' +
                 '</div>',
             classes: {
+                button: 'qq-upload-button',
+                drop: 'qq-upload-drop-area',
+                dropActive: 'qq-upload-drop-area-active',
+                dropDisabled: 'qq-upload-drop-area-disabled',
+                list: 'qq-upload-list',
+                progressBar: 'qq-progress-bar',
+                file: 'qq-upload-file',
+                spinner: 'qq-upload-spinner',
+                finished: 'qq-upload-finished',
+                size: 'qq-upload-size',
+                cancel: 'qq-upload-cancel',
+                failText: 'qq-upload-failed-text',
                 success: 'alert alert-success',
-                fail: 'alert alert-error'
+                fail: 'alert alert-error',
+                successIcon: null,
+                failIcon: null
             }
         }).on('complete', function (event, id, fileName, responseJSON) {
             if (responseJSON.success) {
                 $('#lista-arquivo').append('<li><img class="thumbnail" alt="' + fileName + '"  src="' + responseJSON.img + '"></li>');
             }
-        });;
+        });
+        
         $('#triggerUpload').click(function () {
             manualuploader.fineUploader('uploadStoredFiles');
+        });
+        $('#limpar').click(function () {
+            manualuploader.fineUploader('reset');
+            $('#lista-arquivo').empty();
         });
     });
 </script>
