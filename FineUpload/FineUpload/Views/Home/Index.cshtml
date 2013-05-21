@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/FineUploader.css" rel="stylesheet" />
+<h2>Fine Upload</h2>
+<p><a href="http://fineuploader.com/">http://fineuploader.com/</a></p>
+
+@*<div id="fine-uploader"></div>
+
+<div id="restricted-fine-uploader"></div>
+<script>
+    function createUploader() {
+        var uploader = new qq.FineUploader({
+            element: document.getElementById('fine-uploader'),
+            request: {
+                endpoint: '/Home/UploadFile'
+            },
+            text: {
+                uploadButton: '<div><i class="icon-upload icon-white"></i> Selecionar arquivos</div>'
+            },
+            classes: {
+                success: 'alert alert-success',
+                fail: 'alert alert-error'
+            },
+            callbacks: {
+                onComplete: function (id, fileName, responseJSON) {
+                    console.log(responseJSON);
+                    if (responseJSON.success) {
+                        $('#fine-uploader').append('<img width="60" height="60" src="' + responseJSON.img + '" alt="' + fileName + '">');
+                    }
+                }
+            }
+        });
+    }
+
+    window.onload = createUploader;
+</script>*@
+
+
+
+<div id="manual-fine-uploader"></div>
+<div id="triggerUpload" class="btn" style="margin-top: 10px;">
+<i class="icon-upload icon-white"></i> Enviar Arquivos
+</div>
+
+<div id="lista-arquivo"></div>
+
+<script>
+    $(document).ready(function () {
+        var manualuploader = $('#manual-fine-uploader').fineUploader({
+            request: {
+                endpoint: '/Home/UploadFile'
+            },
+            autoUpload: false,
+            text: {
+                uploadButton: '<div><i class="icon-upload icon-white"></i> Selecionar arquivos</div>'
+            },
+            classes: {
+                success: 'alert alert-success',
+                fail: 'alert alert-error'
+            }
+        }).on('complete', function (event, id, fileName, responseJSON) {
+            if (responseJSON.success) {
+                $('#lista-arquivo').append('<img width="60" height="60" src="' + responseJSON.img + '" alt="' + fileName + '">');
+            }
+        });;
+        $('#triggerUpload').click(function () {
+            manualuploader.fineUploader('uploadStoredFiles');
+        });
+    });
+</script>
+
+
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.fineuploader-3.5.0.min.js"></script>
+}
